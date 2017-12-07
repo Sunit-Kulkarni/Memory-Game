@@ -2,14 +2,42 @@ import React, { Component } from 'react';
 import './MemoryCard.css';
 
 class MemoryCard extends Component {
-  render() {
-    return (
-      <div className="MemoryCard">
-        <img alt="placeholder" src="https://www.digitalcrafts.com/img/DigitalCrafts-Logo-Wrench.png" />
 
-      </div>
-    );
-  }
+	constructor() {
+		super();
+		this.state = {
+			isFlipped: false
+		};
+	}
+	
+	
+
+	clickHandler() {
+		this.setState({isFlipped: !this.state.isFlipped});
+  	}
+
+
+  	
+	render() {
+		var memoryCardInnerClass = "MemoryCardInner";
+		if (this.state.isFlipped) {
+			memoryCardInnerClass = "MemoryCardInner flipped";
+		}
+		return (
+		<div className="MemoryCard" onClick={this.clickHandler.bind(this)}>
+			<div className={memoryCardInnerClass}>
+		      <div className="MemoryCardBack">
+		        <img alt="placeholder" src="https://www.digitalcrafts.com/img/DigitalCrafts-Logo-Wrench.png" />
+
+		      </div>
+
+		      <div className="MemoryCardFront">
+		      ∆
+		      </div>
+		  	</div>
+		</div>
+		);
+	} 
 }
 
 export default MemoryCard;

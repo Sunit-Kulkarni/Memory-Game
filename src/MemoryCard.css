@@ -2,18 +2,48 @@
 	display: inline-block;
 	width: 150px;
 	height: 80px;
-	margin: 3px;
-	border-radius: 5px;
-	border: 3px;
-	border-color: navy;
+	margin: 5px;
 	cursor: pointer;
+	position: relative;
+	perspective: 800px;
+}
+
+.MemoryCardFront, .MemoryCardBack {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+}
+
+.MemoryCardFront {
+	font-size: 30px;
+	padding-top: 20px;
+	transform: rotateY(180deg);
+}
+
+.MemoryCardBack {
 	background: repeating-radial-gradient(
-				  circle,
-				  purple,
-				  purple 10px,
-				  #4b026f 10px, 
-				  #4b026f 20px
-				);
+	  circle,
+	  purple,
+	  purple 10px,
+	  #4b026f 10px, 
+	  #4b026f 20px
+	);
+}
+
+.MemoryCardInner.flipped {
+	transform: rotateY(180deg);
+}
+
+.MemoryCardInner {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform-style: preserve-3d;
+	transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	border-radius: 5px;
+	border: 3px solid navy;
+	box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 img {
