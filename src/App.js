@@ -24,6 +24,8 @@ function shuffle(a) {//copied from stack overflow
     return a;
 }
 
+
+
 class App extends Component {
 
   constructor() {
@@ -35,13 +37,77 @@ class App extends Component {
   }
 
   pickCard(cardIndex) {
-    console.log(cardIndex);
+    var cardToFlip = {...this.state.deck[cardIndex]}; //same ast object.assign({}, this.state.deck[cardIndex])
+    // If card is already flipped, do nothing
+    if (cardToFlip.isFlipped) {
+      return; //stop code execution
+    }
+
+    //actually flip the card
+    cardToFlip.isFlipped = true; //prevents you from unflipping card (untoggled)
+
+    //copy our deck into a new array, but swap out the card we just flipped
+    var newDeck = this.state.deck.map((card, index) => {
+      if (index === cardIndex) {
+        return cardToFlip;
+      }
+      return card;
+    });
+
+    //copy our picked cards array, and also add cardIndex to the end
+    var newPickedCards = this.state.pickedCards.concat(cardIndex);
+
+    //If i just picked the second card, compare the two
+
+    if (newPickedCards.length === 2) {
+      var card1Index = newPickedCards[0];
+      var card2Index = newPickedCards[1];
+
+      var card1 = newDeck[card1Index];
+      var card2 = newDeck[card2Index];
+
+      if (card1.symbol !== card2.symbol) {
+        setTimeout(this.unflipCards.bind(this, card1Index, card2Index), 1000); //delay for 1 second (1000ms)
+        //or use setTimeout(() => {this.unflipCards(card1Index, card2Index)}, 1000); this uses a callback
+      }
+
+      newPickedCards = [];
+    }
+
+
+    this.setState({
+      deck: newDeck, //replaces generateDeck() with newDeck
+      pickedCards: newPickedCards
+    })
+  }
+
+  unflipCards(card1Index, card2Index) {
+    var card1 = {...this.state.deck[card1Index]};
+    var card2 = {...this.state.deck[card2Index]};
+
+    card1.isFlipped = false;
+    card2.isFlipped = false;
+
+    var newDeck = this.state.deck.map((card, index) => {
+      if (index === card1Index) {
+        return card1;
+      }
+      if (index === card2Index) {
+        return card2;
+      }
+      return card;
+    });
+
+    this.setState({
+      deck: newDeck
+    })
   }
 
   render() {
 
     var cardsJSX = this.state.deck.map((card, index) => {
-    return <MemoryCard  pickCard={this.pickCard.bind(this, index)}
+    return <MemoryCard  key = {index} //for react optimization -- need to deal with this - gotcha
+                        pickCard={this.pickCard.bind(this, index)}
                         symbol={card.symbol} 
                         isFlipped={card.isFlipped} />;
     });
