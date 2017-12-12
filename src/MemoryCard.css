@@ -12,7 +12,9 @@
 	position: absolute;
 	width: 100%;
 	height: 100%;
+	-moz-backface-visibilty: hidden;
 	backface-visibility: hidden;
+	transform: rotateX(0deg);
 }
 
 .MemoryCardFront {
@@ -46,7 +48,7 @@
 	box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-img {
+.MemoryCardBack img {
 	width: 60px;
 	padding-top: 27px;
 }
