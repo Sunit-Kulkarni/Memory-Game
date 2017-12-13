@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Link, Route, Switch } from 'react-router-dom';
 import MemoryGame from './MemoryGame';
-import Ajax from './Ajax';
+import Jobs from './Jobs';
 
 class App extends Component {
 	constructor () {
@@ -15,13 +15,13 @@ class App extends Component {
 			<div>
 				<div className="navbar">
 					<Link to="/memory">Memory Game</Link>
-					<Link to="/ajax">Ajax</Link>
+					<Link to="/Jobs">Jobs</Link>
 				</div>
 
 				<Switch>
 					<Route path="/" component={MemoryGame}/>
 					<Route path="/memory" component={MemoryGame}/>
-					<Route path="/ajax" component={Ajax}/>
+					<Route path="/Jobs" component={Jobs}/>
 				</Switch>
 			</div>
 		);
