@@ -11,7 +11,7 @@ class Job extends Component {
 
 	componentWillMount() {
 		var jobId = this.props.match.params.id;
-		axios.get('/api/jobs' + jobId)
+		axios.get('/api/jobs/' + jobId)
 		.then(({ data }) => {
 			this.setState(data);
 		})
